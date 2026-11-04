@@ -23,7 +23,6 @@ export default function MainUi(props: Props) {
    * 그룹번호 설정
    */
   const [selectGroupNumber, setSelectGroupNumber] = useState('00') // 기본값은 두 자리의 0으로 설정
-  const [checked, setChecked] = useState(false)
 
   /**
    * 이미지 변경
@@ -66,20 +65,6 @@ export default function MainUi(props: Props) {
   }
 
   useEffect(() => {
-    if (!selectGroupNumber) return
-    if (selectGroupNumber.charAt(0) == selectGroupNumber.charAt(1)) {
-      if (selectGroupNumber.charAt(0) != '0') {
-        setChecked(true)
-        setSelectGroupNumber('00')
-      }
-    }
-  }, [selectGroupNumber])
-
-  const handleCloseModal = () => {
-    setChecked(false)
-  }
-
-  useEffect(() => {
     if (!commandRunner) return // commandRunner 객체가 초기화되지 않았으면 아무 것도 하지 않음
 
     const handleImageChange = (newSrc) => {
@@ -106,31 +91,6 @@ export default function MainUi(props: Props) {
         }}
       >
         <div>
-          {checked && (
-            <div
-              onClick={handleCloseModal}
-              style={{
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                background: 'rgba(0, 0, 0, 0.8)',
-                color: '#fff',
-                padding: '5px',
-                borderRadius: '10px',
-                zIndex: '9999',
-                width: '200px',
-              }}
-            >
-              <p
-                style={{
-                  fontSize: '14px',
-                }}
-              >
-                동일한 앞뒤 번호는 설정할 수 없습니다.
-              </p>
-            </div>
-          )}
           <h4
             style={{
               textAlign: 'center',
@@ -155,7 +115,7 @@ export default function MainUi(props: Props) {
               }}
               value={selectGroupNumber?.charAt(0) ?? '0'}
             >
-              {[...Array(8).keys()].map((number) => (
+              {[...Array(10).keys()].map((number) => (
                 <option key={number} value={number}>
                   {number}
                 </option>
@@ -172,7 +132,7 @@ export default function MainUi(props: Props) {
               }}
               value={selectGroupNumber?.charAt(1) ?? '0'}
             >
-              {[...Array(8).keys()].map((number) => (
+              {[...Array(10).keys()].map((number) => (
                 <option key={number} value={number}>
                   {number}
                 </option>
